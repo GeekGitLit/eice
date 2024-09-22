@@ -67,7 +67,7 @@ h3 {
 button {
   font-family: "Jua", sans-serif;
   font-weight: lighter;
-  background-color: rgb(0, 123, 255);
+  background-color: pink;
   color: white;
   padding: 30px; /* 버튼의 크기 조정 */
   font-size: 28px; /* 버튼 글씨 크기 */
@@ -91,7 +91,7 @@ button {
 }
 /* 마우스를 올렸을 때 버튼 색상 변경 */
 button:hover {
-  background-color: #0056b3;
+  background-color: rgb(195, 114, 128);
 }
 
 /* 질문 컨테이너 스타일 */
@@ -195,7 +195,7 @@ button:hover {
   padding: 5px 15px;
   font-size: 1.2rem;
   font-weight: bold;
-  background-color: #007BFF;
+  background-color: pink;
   color: white;
   border: none;
   border-radius: 15px;
@@ -206,7 +206,7 @@ button:hover {
 }
 
 .restart-button:hover {
-  background-color: #0056b3;
+  background-color: rgb(195, 114, 128);
 }
 
 /* 내비게이션 버튼 컨테이너 */
@@ -222,7 +222,7 @@ button:hover {
 /* 이전, 다음 버튼 스타일 */
 .prev-button, .next-button {
   padding: 5px 10px; /* 버튼 내부 여백을 줄임 */
-  background-color: #007BFF;
+  background-color: pink;
   color: white;
   border: none;
   border-radius: 20px;
@@ -236,7 +236,7 @@ button:hover {
 
 /* 버튼 호버 상태 스타일 */
 .prev-button:hover, .next-button:hover {
-  background-color: #0056b3;
+  background-color: rgb(195, 114, 128);
 }
 
 /* 이전 버튼이 비활성화되었을 때 스타일 */
