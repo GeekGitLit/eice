@@ -347,11 +347,11 @@ function reset() {
 function getColourForTrack(area) {
   switch (area) {
     case "전자":
-      return "#FF0000";  // 전자 분야는 빨강
+      return "#4CAF50";  // 전자 분야는 빨강
     case "정보":
-      return "#00FF00";  // 정보 분야는 초록
+      return "#2196F3";  // 정보 분야는 초록
     case "통신":
-      return "#0000FF";  // 통신 분야는 파랑
+      return "#FFC107";  // 통신 분야는 파랑
     default:
       return "#CCCCCC";  // 기본값은 회색
   }
