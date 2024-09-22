@@ -267,7 +267,7 @@ function showResults() {
     questionContainer.innerHTML += `
       <h3 id="topTrack">${topTrack} 트랙</h3>
       <img src="${topTrackInfo.image}" alt="${topTrack} 이미지" class="topTrack" style="width: 100%; max-width: 300px;">
-      <p>${topTrackInfo.description}</p>
+      <p id="desc">${topTrackInfo.description}</p>
     `;
   }
 
