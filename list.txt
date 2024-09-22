@@ -1,0 +1,243 @@
+< 질문 >
+
+전자 정보 통신
+
+1 : 1 : 1 선택지
+
+ <전자>
+
+ 물리 전자 공학 : 왜 전자기기는 온도에 영향을 많이 받는지 궁금하다 
+
+ <정보>
+ 
+ 챗GPT의 구동 방식이 궁금하다.
+
+ <통신> 
+
+ 이동 통신 기술(ex핸드폰)의 원리가 궁금하다
+
+<전자 vs  통신>
+
+전기회로 vs 신호 및 시스템  
+
+나는 중학교때 직렬,병렬 구조에 대해 관심이 있었다 vs 삼각함수 그래프가 어디서 유용하게 쓰이는지 궁금하다
+
+
+디스플레이 공학 vs 디지털 통신 시스템 
+
+TV 화면에 색깔이 어떻게 표현되는지 궁금하다 vs 무전기의 통신 원리가 궁금하다.
+
+
+광전자 공학 vs 컴퓨터 네트워크   
+
+나는 광선검을 만들고 싶다 vs 외계인에게 신호를 보내고 싶다. 
+
+
+
+<정보 vs 통신>
+
+디지털 제어 vs 무선통신 공학 
+
+자율주행 자동차의 원리가 궁금하다 vs 노이즈 캔슬링의 원리가 궁금하다
+
+
+자동 제어 vs 데이터 통신 
+
+기계의 자동화 시스템에 대해 관심 있다 vs 네트워크상에서 정보가 어떻게 오고가는지 궁금하다
+
+
+영상 처리 vs 차세대 이동 통신 
+
+영상의 구현방법이 궁금하다 vs 나는 5G보다 더 빠른 속도의 통신망이 생길지 궁금하다
+
+
+
+<전자 vs 정보>
+
+양자 전자 소자 공학 vs 인공지능 
+
+마이크의 증폭 시스템이 궁금하다 vs sns의 알고리즘 체계가 궁금하다
+
+
+전자기 vs 디지털 신호 처리
+
+전기장의 수학적 표현 방식이 궁금하다 vs  소리가 전자기기에 입력되고, 다시 출력되는 과정이 궁금하다.
+
+
+LED 공학 vs 랜덤 프로세스 
+
+형광등의 발광 원리가 궁금하다 vs  확률에 기반한 정보의 처리 방식이 궁금하다.
+
+
+
+
+
+
+// 선택한 답변을 저장하는 배열
+let selectedAnswers = Array(questions.length).fill(null); // 선택되지 않은 질문은 null로 설정
+
+// 이전에 선택한 답변을 저장하는 배열 (이전으로 눌렀을 때 기존 데이터를 유지)
+let previousScores = {
+  "전자": 0,
+  "정보": 0,
+  "통신": 0
+};
+
+// 질문을 로드하는 함수
+function loadQuestion() {
+  const questionContainer = document.getElementById("question-container");
+  const question = questions[currentQuestionIndex];
+  const questionText = question && question.question ? question.question : "";
+
+  // 질문 텍스트 추가
+  questionContainer.innerHTML = `<h2>${questionText}</h2>`;
+
+  // 버튼 컨테이너 생성
+  const buttonsContainer = document.createElement('div');
+  buttonsContainer.classList.add('buttons-container');
+
+  // 첫 번째 선택지 버튼
+  const button1 = document.createElement("button");
+  button1.innerText = question.choices[0].text;
+  button1.onclick = () => selectAnswer(question.choices[0].track, 0);
+  buttonsContainer.appendChild(button1);
+
+  // 'vs' 텍스트 추가
+  const vsText = document.createElement('div');
+  vsText.classList.add('vs-text');
+  vsText.innerText = "vs";
+  buttonsContainer.appendChild(vsText);
+
+  // 두 번째 선택지 버튼
+  const button2 = document.createElement("button");
+  button2.innerText = question.choices[1].text;
+  button2.onclick = () => selectAnswer(question.choices[1].track, 1);
+  buttonsContainer.appendChild(button2);
+
+  // 세 번째 선택지 버튼(선택지가 3개일 경우)
+  if (question.choices.length === 3) {
+    const button3 = document.createElement("button");
+    button3.innerText = question.choices[2].text;
+    button3.onclick = () => selectAnswer(question.choices[2].track, 2);
+    buttonsContainer.appendChild(button3);
+  }
+
+  questionContainer.appendChild(buttonsContainer);
+
+  // 이전, 다음 버튼 추가
+  const navigationContainer = document.createElement('div');
+  navigationContainer.classList.add('navigation-container');
+
+  // 이전 버튼
+  const prevButton = document.createElement("button");
+  prevButton.classList.add('prev-button');
+  prevButton.innerText = "이전으로";
+  prevButton.onclick = goBack;
+  if (currentQuestionIndex === 0) {
+    prevButton.disabled = true; // 첫 번째 질문에서는 '이전' 버튼 비활성화
+  }
+  navigationContainer.appendChild(prevButton);
+
+  // 다음 버튼 (선택이 되지 않은 경우 비활성화)
+  const nextButton = document.createElement("button");
+  nextButton.classList.add('next-button');
+  nextButton.innerText = "다음으로";
+  nextButton.disabled = selectedAnswers[currentQuestionIndex] === null; // 선택되지 않으면 비활성화
+  nextButton.onclick = goToNextQuestion;
+  navigationContainer.appendChild(nextButton);
+
+  questionContainer.appendChild(navigationContainer);
+}
+
+// 사용자가 답변을 선택했을 때 호출되는 함수
+function selectAnswer(track, choiceIndex) {
+  // 선택한 답변을 저장
+  selectedAnswers[currentQuestionIndex] = choiceIndex;
+
+  // 이전 점수를 유지하고 새로 선택한 답변에 대해서만 덮어씀
+  if (scores.hasOwnProperty(track)) {
+    // 선택하기 전에 기존의 점수를 저장
+    previousScores = { ...scores };
+
+    // 선택한 답변이 새로 선택되면 덮어씀
+    scores[track] += 1;
+  }
+
+  // 선택 후 '다음으로' 버튼을 활성화
+  const nextButton = document.querySelector(".next-button");
+  nextButton.disabled = false;
+}
+
+// '다음으로' 버튼 클릭 시 호출되는 함수
+function goToNextQuestion() {
+  if (currentQuestionIndex < questions.length - 1) {
+    currentQuestionIndex++;
+    loadQuestion();
+  } else {
+    showResults();
+  }
+}
+
+// '이전으로' 버튼 클릭 시 호출되는 함수
+function goBack() {
+  if (currentQuestionIndex > 0) {
+    currentQuestionIndex--;
+    loadQuestion();
+  }
+}
+
+// 새로 선택된 답변으로 덮어씌울 때만 점수 업데이트
+function updateTrackScores(track) {
+  // 만약 사용자가 새롭게 선택했다면 덮어쓰기
+  scores = { ...previousScores };
+}
+
+// 최종 점수를 퍼센트로 계산하고 가장 높은 트랙을 보여주는 함수
+function showResults() {
+  // 총 점수 계산
+  const totalScore = Object.values(scores).reduce((acc, score) => acc + score, 0);
+  const questionContainer = document.getElementById("question-container");
+  questionContainer.innerHTML = `<h2>결과</h2>`;
+
+  // 최고 비율의 트랙 찾기
+  let topTrack = null;
+  let highestPercentage = 0;
+
+  Object.keys(scores).forEach(track => {
+    const percentage = (scores[track] / totalScore) * 100;
+    if (percentage > highestPercentage) {
+      highestPercentage = percentage;
+      topTrack = track;
+    }
+  });
+
+  // 대표 트랙을 상단에 표시
+  if (topTrack) {
+    const topTrackInfo = trackDescriptions[topTrack];
+    questionContainer.innerHTML += `
+      <h3 id="topTrack">${topTrack} 트랙</h3>
+      <img src="${topTrackInfo.image}" alt="${topTrack} 이미지" style="width: 100%; max-width: 300px;">
+      <p>${topTrackInfo.description}</p>
+    `;
+  }
+
+  // '처음으로' 버튼 생성
+  const restart = document.createElement('button');
+  restart.innerText = "처음으로";
+  restart.onclick = reset;
+  restart.classList.add('restart-button');
+  questionContainer.appendChild(restart);
+}
+
+// 게임을 다시 시작하는 함수
+function reset() {
+  // 질문 인덱스와 점수 초기화
+  currentQuestionIndex = 0;
+  scores["전자"] = 0;
+  scores["정보"] = 0;
+  scores["통신"] = 0;
+
+  // 질문 컨테이너를 숨기고 시작 페이지를 보여줌
+  document.getElementById('question-container').style.display = 'none';
+  document.getElementById('start-page').style.display = 'block';
+}
