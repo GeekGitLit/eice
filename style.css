@@ -1,7 +1,7 @@
 /* 기본 스타일 */
 html, body {
   font-family: 'Jua', sans-serif;
-  background-color: #f0f0f0;
+  background-color: rgba(255, 255, 255, 0);
   margin: 0;
   padding: 0;
   display: flex;
@@ -59,6 +59,10 @@ h3 {
   font-weight: lighter;
 }
 
+#subtitle {
+  color: #ffd1dc;
+}
+
 #topTrack {
   color : #e75480;
   font-size: 33px;
@@ -85,11 +89,11 @@ button {
   margin: 0 auto; /* 버튼을 중앙에 정렬 */
   margin-top: 0; /* 버튼과 상단 텍스트 간격을 동일하게 설정 */
   margin-bottom: 40px; /* 버튼 아래 간격 추가 */
-  text-shadow: 
-    -1px -1px 0 #000,  /* 왼쪽 위 */
-     1px -1px 0 #000,  /* 오른쪽 위 */
-    -1px  1px 0 #000,  /* 왼쪽 아래 */
-     1px  1px 0 #000;  /* 오른쪽 아래 */
+  /* text-shadow: 
+    -1px -1px 0 #000,  
+    1px -1px 0 #000,  
+    -1px  1px 0 #000,  
+    1px  1px 0 #000;   */
 }
 
 #start-button button {
