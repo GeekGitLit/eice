@@ -77,15 +77,15 @@ const questions = [
 const trackDescriptions = {
   "전자": {
     description: "전자공학은 전기와 전자에 관한 원리를 바탕으로 한 다양한 응용 분야를 다루는 학문입니다.",
-    image: "elec.png"  // 원하는 이미지 파일 경로
+    image: "elec.png"
   },
   "정보": {
     description: "정보통신공학은 데이터를 수집, 처리, 전송하는 시스템을 설계하는 학문입니다.",
-    image: "info.png"  // 원하는 이미지 파일 경로
+    image: "info.png"
   },
   "통신": {
     description: "통신공학은 무선 및 유선 통신 기술을 연구하는 학문입니다.",
-    image: "image.png"  // 원하는 이미지 파일 경로
+    image: "image.png"
   }
 };
 
@@ -93,7 +93,7 @@ const trackDescriptions = {
 let currentQuestionIndex = 0;
 let selectedAnswers = Array(questions.length).fill(null); // 사용자가 선택한 답변을 저장하는 배열
 
-// 각 분야에 대한 점수를 저장하는 객체
+// 각 분야에 대한 점수를 저장하는 객체 초기화
 const scores = {
   "전자": 0,
   "정보": 0,
@@ -134,26 +134,6 @@ function startGame() {
 
 // 버튼 클릭 시 전체 화면 모드를 토글
 document.getElementById('fullscreenButton').addEventListener('click', toggleFullscreen);
-
-// 첫 페이지에서만 전체 화면 버튼 보이게 설정
-window.addEventListener('load', function() {
-  const fullscreenButton = document.getElementById('fullscreenButton');
-
-  // 첫 페이지일 때만 버튼 표시
-  if (document.getElementById('start-page').style.display !== 'none') {
-    fullscreenButton.style.display = 'block';
-  } else {
-    fullscreenButton.style.display = 'none';
-  }
-});
-
-// DOM이 완전히 로드된 후에 전체 화면 버튼에 이벤트 리스너를 추가
-document.addEventListener('DOMContentLoaded', function () {
-  const fullscreenButton = document.getElementById('fullscreenButton');
-  if (fullscreenButton) {
-    fullscreenButton.addEventListener('click', toggleFullscreen);
-  }
-});
 
 // 현재 질문을 화면에 표시하는 함수
 function loadQuestion() {
@@ -234,7 +214,7 @@ function goBack() {
 }
 
 function updateTrackScores(track) {
-  scores = { ...previousScores };
+  scores = { ...previousScores }; // '이전으로' 버튼을 클릭 시 아예 초기화되는 경우를 배제
 }
 
 // 최종 점수를 퍼센트로 계산하고 가장 높은 트랙을 보여주는 함수
@@ -249,7 +229,7 @@ function showResults() {
   let highestPercentage = 0;
 
   Object.keys(scores).forEach(track => {
-    const percentage = (scores[track] / totalScore) * 100;
+    const percentage = (scores[track] / totalScore) * 100; // 선택된 점수를 percentage로 변환
     if (percentage > highestPercentage) {
       highestPercentage = percentage;
       topTrack = track;
@@ -275,6 +255,7 @@ function showResults() {
   let barHTML = '<div class="progress-bar">';
   const keys = Object.keys(scores);
 
+  // 그래프 생성할 때 style 지정
   keys.forEach((area, index) => {
     const percentage = (scores[area] / totalScore) * 100;
 
@@ -302,6 +283,7 @@ function showResults() {
       legendHTML += `<p>${area}: ${percentage.toFixed(1)}%</p>`;
     }
   });
+
   legendHTML += '</div>';
 
   questionContainer.innerHTML += legendHTML;
@@ -314,6 +296,7 @@ function showResults() {
   questionContainer.appendChild(restart);
 }
 
+// sidebar에 지금까지 참여 인원 및 해당 트랙 인원 표시. Server 구축 미흡으로 새로고침시 초기화됨.
 function updateSidebar() {
   document.getElementById('elecCount').innerText = `전자 : ${totalScores["전자"]}명`;
   document.getElementById('infoCount').innerText = `정보 : ${totalScores["정보"]}명`;
@@ -347,12 +330,12 @@ function reset() {
 function getColourForTrack(area) {
   switch (area) {
     case "전자":
-      return "#4CAF50";  // 전자 분야는 빨강
+      return "#4CAF50";  // 전자 분야는 초록
     case "정보":
-      return "#2196F3";  // 정보 분야는 초록
+      return "#2196F3";  // 정보 분야는 파랑
     case "통신":
-      return "#FFC107";  // 통신 분야는 파랑
+      return "#FFC107";  // 통신 분야는 노랑
     default:
-      return "#CCCCCC";  // 기본값은 회색
+      return "#CCCCCC";  // 기본값은 회색, 해당 없음.
   }
 }
