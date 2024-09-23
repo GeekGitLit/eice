@@ -132,9 +132,6 @@ function startGame() {
   loadQuestion();
 }
 
-// 버튼 클릭 시 전체 화면 모드를 토글
-document.getElementById('fullscreenButton').addEventListener('click', toggleFullscreen);
-
 // 현재 질문을 화면에 표시하는 함수
 function loadQuestion() {
   const questionContainer = document.getElementById("question-container");
